@@ -10,8 +10,9 @@ class Movies extends Component{
     render(){
      return(
          <div>
-             <h1>Vidly Project</h1>
-             <p> There are {this.state.movies.length} movies in the database</p>
+             <p> Showing {this.state.movies.length} movies in the database</p>
+
+            
      </div>
      )
     
