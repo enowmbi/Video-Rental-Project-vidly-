@@ -7,10 +7,10 @@ const MoviesTable =(props)=>{
         <table className="table">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Qty in Stock</th>
-                    <th>Rate</th>
+                    <th onClick={()=>props.onSort('title')}>Title</th>
+                    <th onClick={()=>props.onSort('genre.name')}>Genre</th>
+                    <th onClick={()=>props.onSort('numberInStock')}>Qty in Stock</th>
+                    <th onClick={()=>props.onSort('dailyRentalRate')}>Rate</th>
                     <th/>
                     <th/>
                 </tr>

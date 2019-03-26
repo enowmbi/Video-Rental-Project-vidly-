@@ -5,6 +5,7 @@ import Pagination from './common/Pagination';
 import { Paginate } from '../utils/Paginate';
 import ListGroup from './common/ListGroup';
 import MoviesTable from '../components/MoviesTable';
+import _ from 'lodash';
 
 
 class Movies extends Component{
@@ -13,7 +14,8 @@ class Movies extends Component{
         pageSize: 4,
         currentPage:1,
         genres: [],
-        selectedGenre: ""
+        selectedGenre: "",
+        sortColumn:{column:'title',order:'asc'}
     }
 
     componentDidMount(){
@@ -41,13 +43,30 @@ class Movies extends Component{
         this.setState({selectedGenre: genre, currentPage: 1})
     }
 
+    handleSort = (column) => {
+        const sortColumn = {...this.state.sortColumn}
+        if(column === sortColumn.column){
+            sortColumn.order = (sortColumn.order ==='asc'?'desc':'asc')            
+        }else
+        {
+            sortColumn.column = column
+            sortColumn.order = 'asc'
+        }
+
+        this.setState({sortColumn: sortColumn})
+
+    }
+
     render(){
         if(this.state.movies.length ===0){
             return <div className="container"><p className="m-4">There are no movies in the database.</p></div>
         }
 
         const filteredMovies = this.state.selectedGenre && this.state.selectedGenre._id ? this.state.movies.filter(m => m.genre._id === this.state.selectedGenre._id) : this.state.movies
-        const movies = Paginate(filteredMovies,this.state.currentPage,this.state.pageSize)
+
+        const sortedMovies = _.orderBy(filteredMovies,[this.state.sortColumn.column],[this.state.sortColumn.order])
+        
+        const movies = Paginate(sortedMovies,this.state.currentPage,this.state.pageSize)
 
         return(
             <div className="container">
@@ -66,18 +85,20 @@ class Movies extends Component{
                         <MoviesTable
                             movies={movies}
                             onLiked={this.handleLike} 
-                        onDelete={this.handleDelete}/>
-
-
-                        <Pagination 
-                            itemCount={filteredMovies.length}
-                            pageSize={this.state.pageSize}
-                            currentPage={this.state.currentPage}
-                            onPageChange={this.handlePageChange}
+                            onDelete={this.handleDelete}
+                            onSort ={this.handleSort}
                         />
-                    </div>
+
+
+                    <Pagination 
+                        itemCount={filteredMovies.length}
+                        pageSize={this.state.pageSize}
+                        currentPage={this.state.currentPage}
+                        onPageChange={this.handlePageChange}
+                    />
                 </div>
             </div>
+        </div>
         )
     }
 }
