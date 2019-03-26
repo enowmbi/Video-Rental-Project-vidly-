@@ -10,8 +10,8 @@ class MoviesTable  extends Component{
         {name:'genre.name',label:'Genre'},      
         {name:'numberInStock',label:'Qty in Stock'},      
         {name:'dailyRentalRate',label:'Rate'},      
-        { },      
-        { }      
+        {key: 'like' },      
+        {key:'delete' }      
     ]
 
     render(){
