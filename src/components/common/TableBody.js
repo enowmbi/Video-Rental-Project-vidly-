@@ -2,11 +2,12 @@ import React,{ Component } from 'react';
 import Like from '../common/Like';
 
 class TableBody extends Component{
+
     render(){
         return(
         <tbody>
             {this.props.data.map(item =>(
-            <tr>
+                <tr key={item._id || item.key}>
                 <td>{item.title}</td>
                 <td>{item.genre.name}</td>
                 <td>{item.numberInStock}</td>
