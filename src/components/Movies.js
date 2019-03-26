@@ -75,7 +75,7 @@ class Movies extends Component{
                         <p className="m-4"> Showing {filteredMovies.length} {filteredMovies.length > 1? "movies" :"movie"} in the database.</p>
                         <MoviesTable
                             movies={movies}
-                            onLiked={this.handleLike} 
+                            onLike={this.handleLike} 
                             onDelete={this.handleDelete}
                             onSort ={this.handleSort}
                             sortColumn ={this.state.sortColumn}
