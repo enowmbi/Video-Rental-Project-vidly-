@@ -5,7 +5,7 @@ const MoviesTable =(props)=>{
     return(
         <React.Fragment>
         <table className="table">
-            <thead>
+            <thead className="App-clickable">
                 <tr>
                     <th onClick={()=>props.onSort('title')}>Title</th>
                     <th onClick={()=>props.onSort('genre.name')}>Genre</th>
