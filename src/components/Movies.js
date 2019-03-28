@@ -50,7 +50,7 @@ class Movies extends Component{
 
     render(){
         if(this.state.movies.length ===0){
-            return <div className="container"><p className="m-4">There are no movies in the database.</p></div>
+            return <div className="container"><p>There are no movies in the database.</p></div>
         }
 
         const filteredMovies = this.state.selectedGenre && this.state.selectedGenre._id ? this.state.movies.filter(m => m.genre._id === this.state.selectedGenre._id) : this.state.movies
@@ -60,7 +60,7 @@ class Movies extends Component{
         const movies = Paginate(sortedMovies,this.state.currentPage,this.state.pageSize)
 
         return(
-            <div className="container">
+            <React.Fragment>
                 <div className="row">
                     <div className="col-md-3">
                         <ListGroup
@@ -90,7 +90,7 @@ class Movies extends Component{
                     />
                 </div>
             </div>
-        </div>
+        </React.Fragment>
         )
     }
 }
