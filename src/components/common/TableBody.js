@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import Like from '../common/Like';
+import { NavLink } from 'react-router-dom';
 
 class TableBody extends Component{
 
@@ -8,7 +9,7 @@ class TableBody extends Component{
         <tbody>
             {this.props.data.map(item =>(
                 <tr key={item._id || item.key}>
-                <td>{item.title}</td>
+                    <td><NavLink to={`/movies/${item._id}`}>{item.title}</NavLink></td>
                 <td>{item.genre.name}</td>
                 <td>{item.numberInStock}</td>
                 <td>{item.dailyRentalRate}</td>
