@@ -6,6 +6,7 @@ import { Paginate } from '../utils/Paginate';
 import ListGroup from './common/ListGroup';
 import MoviesTable from '../components/MoviesTable';
 import _ from 'lodash';
+import { NavLink } from 'react-router-dom';
 
 
 class Movies extends Component{
@@ -49,8 +50,11 @@ class Movies extends Component{
     }
 
     render(){
+                
         if(this.state.movies.length ===0){
-            return <div className="container"><p>There are no movies in the database.</p></div>
+            return <div className="container">
+                <p>There are no movies in the database.</p>
+                </div>
         }
 
         const filteredMovies = this.state.selectedGenre && this.state.selectedGenre._id ? this.state.movies.filter(m => m.genre._id === this.state.selectedGenre._id) : this.state.movies
@@ -72,7 +76,8 @@ class Movies extends Component{
                         /> 
                     </div>
                     <div className="col-md-9">
-                        <p className="m-4"> Showing {filteredMovies.length} {filteredMovies.length > 1? "movies" :"movie"} in the database.</p>
+                <NavLink className="btn btn-primary my-2" to="movies/new">New Movie</NavLink>
+                        <p className="my-4"> Showing {filteredMovies.length} {filteredMovies.length > 1? "movies" :"movie"} in the database.</p>
                         <MoviesTable
                             movies={movies}
                             onLike={this.handleLike} 

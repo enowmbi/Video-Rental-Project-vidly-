@@ -1,4 +1,4 @@
-import React,{ Component } from 'react';
+import React from 'react';
 import Joi from 'joi-browser';
 import Form from './common/Form';
 
@@ -10,7 +10,7 @@ class Register extends Form{
     }
 
     doSubmit=()=>{
-    console.log("Registration form submitted !")
+        // console.log("Registration form submitted !")
     }
 
     schema={
@@ -24,12 +24,12 @@ class Register extends Form{
             <div className="container">
                 <h1>Register</h1>
                 <form>
-            {this.renderInput('username','Username','',"Enter Email")}
-            {this.renderInput('password','Password','password','Enter Password')}
-            {this.renderInput('name','Name','','Enter Full name')}
-            {this.renderButton('Register')}
-        </form>
-    </div>
+                    {this.renderInput('username','Username','',"Enter Email")}
+                    {this.renderInput('password','Password','password','Enter Password')}
+                    {this.renderInput('name','Name','','Enter Full name')}
+                    {this.renderButton('Register')}
+                </form>
+            </div>
         ) 
     }
 }

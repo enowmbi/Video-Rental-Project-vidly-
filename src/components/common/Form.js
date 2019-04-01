@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import Input from './Input';
+import Select from './Select';
 
 class Form extends Component{
     state={
@@ -11,7 +12,7 @@ class Form extends Component{
     handleSubmit=(e)=>{
         e.preventDefault();
         const errors = this.validate()
-        console.log(this.validate())
+        // console.log(this.validate())
         this.setState({errors: errors || {}})
         if(errors) return ;
 
@@ -50,10 +51,12 @@ class Form extends Component{
 
         const data ={...this.state.data}
         data[input.name] = input.value
+        // console.log(data)
         this.setState({data: data,errors:errors})
     }
 
     renderInput(name,label,type='text',placeholder){
+        
        const { data,errors } = this.state
     return(
         <Input name={name} 
@@ -68,9 +71,24 @@ class Form extends Component{
 
     }
 
+    renderSelect(name,label,options){
+        const { data, errors } = this.state
+        return(
+            <Select 
+                name={name}
+                label={label}
+                options={options}
+                onChange={this.handleChange}
+                value={data[name]}
+                error={errors[name]}
+            />
+            )
+    }
+
     renderButton(label){
         return(
             <button 
+                onClick={this.handleSubmit}
                 type="submit"
                 disabled={this.validate()}
                 className="btn btn-primary">
