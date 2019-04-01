@@ -29,7 +29,7 @@ class MovieForm extends Form{
         const genres = getGenres();
         this.setState({genres: genres || {}})
         //get movie if not new
-    let movie =''
+        let movie =''
         if(this.props.match.params.id !=='new'){
             movie = getMovie(this.props.match.params.id)
             if(!movie) return this.props.history.replace('/not-found')
@@ -55,18 +55,18 @@ class MovieForm extends Form{
         saveMovie(this.state.data)
         this.props.history.push('/movies')
     }
-render(){
-    return(
-        <div>
-            <h1>Movie Form </h1>
-            {this.renderInput('title','Title','','Enter Movie Title')}
-            {this.renderSelect('genreId','Genre',this.state.genres)}
-            {this.renderInput('numberInStock','Qty in Stock','','Enter Quantity in Stock')}
-            {this.renderInput('dailyRentalRate','Rate','','Enter Daily Rental Rate')}
-            {this.renderButton('Save')}
-        </div>
-           )
-}
+    render(){
+        return(
+            <div>
+                <h1>Movie Form </h1>
+                {this.renderInput('title','Title','','Enter Movie Title')}
+                {this.renderSelect('genreId','Genre',this.state.genres)}
+                {this.renderInput('numberInStock','Qty in Stock','','Enter Quantity in Stock')}
+                {this.renderInput('dailyRentalRate','Rate','','Enter Daily Rental Rate')}
+                {this.renderButton('Save')}
+            </div>
+        )
+    }
 }
 
 export default MovieForm
