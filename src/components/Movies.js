@@ -5,8 +5,9 @@ import Pagination from './common/Pagination';
 import { Paginate } from '../utils/Paginate';
 import ListGroup from './common/ListGroup';
 import MoviesTable from '../components/MoviesTable';
-import _ from 'lodash';
+import SearchBox from './common/SearchBox';
 import { NavLink } from 'react-router-dom';
+import _ from 'lodash';
 
 
 class Movies extends Component{
@@ -16,7 +17,8 @@ class Movies extends Component{
         currentPage:1,
         genres: [],
         selectedGenre: "",
-        sortColumn:{column:'title',order:'asc'}
+        sortColumn:{column:'title',order:'asc'},
+        searchQuery:""
     }
 
     componentDidMount(){
@@ -41,26 +43,33 @@ class Movies extends Component{
     }
 
     handleGenreSelect=(genre)=>{
-        this.setState({selectedGenre: genre, currentPage: 1})
+        this.setState({selectedGenre: genre, searchQuery: "",currentPage: 1})
     }
 
     handleSort = (sortColumn) => {
         this.setState({sortColumn: sortColumn})
-
+    }
+    handleSearch=query=>{
+        this.setState({searchQuery: query,selectedGenre: null, currentPage:1})
     }
 
     render(){
-                
+
         if(this.state.movies.length ===0){
             return <div className="container">
                 <p>There are no movies in the database.</p>
-                </div>
+            </div>
+        }
+        let filteredMovies = "";
+        if(this.state.searchQuery){
+            filteredMovies = this.state.movies.filter(m=>m.title.toLowerCase().startsWith(this.state.searchQuery.toLowerCase()));
+        }
+        else{
+            filteredMovies = this.state.selectedGenre && this.state.selectedGenre._id ? this.state.movies.filter(m => m.genre._id === this.state.selectedGenre._id) : this.state.movies
         }
 
-        const filteredMovies = this.state.selectedGenre && this.state.selectedGenre._id ? this.state.movies.filter(m => m.genre._id === this.state.selectedGenre._id) : this.state.movies
-
         const sortedMovies = _.orderBy(filteredMovies,[this.state.sortColumn.column],[this.state.sortColumn.order])
-        
+
         const movies = Paginate(sortedMovies,this.state.currentPage,this.state.pageSize)
 
         return(
@@ -76,26 +85,31 @@ class Movies extends Component{
                         /> 
                     </div>
                     <div className="col-md-9">
-                <NavLink className="btn btn-primary my-2" to="movies/new">New Movie</NavLink>
+                        <NavLink className="btn btn-primary my-2" to="movies/new">New Movie</NavLink>
                         <p className="my-4"> Showing {filteredMovies.length} {filteredMovies.length > 1? "movies" :"movie"} in the database.</p>
-                        <MoviesTable
-                            movies={movies}
-                            onLike={this.handleLike} 
-                            onDelete={this.handleDelete}
-                            onSort ={this.handleSort}
-                            sortColumn ={this.state.sortColumn}
+                        <SearchBox
+                            onChange={this.handleSearch}
+                            value={this.state.searchQuery} 
                         />
 
-
-                    <Pagination 
-                        itemCount={filteredMovies.length}
-                        pageSize={this.state.pageSize}
-                        currentPage={this.state.currentPage}
-                        onPageChange={this.handlePageChange}
+                    <MoviesTable
+                        movies={movies}
+                        onLike={this.handleLike} 
+                        onDelete={this.handleDelete}
+                        onSort ={this.handleSort}
+                        sortColumn ={this.state.sortColumn}
                     />
-                </div>
+
+
+                <Pagination 
+                    itemCount={filteredMovies.length}
+                    pageSize={this.state.pageSize}
+                    currentPage={this.state.currentPage}
+                    onPageChange={this.handlePageChange}
+                />
             </div>
-        </React.Fragment>
+        </div>
+    </React.Fragment>
         )
     }
 }
