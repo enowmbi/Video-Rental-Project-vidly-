@@ -14,6 +14,7 @@ const Input =(props)=>{
                 id={props.name} 
                 placeholder={props.placeholder} 
             />
+            {props.error && <div className="alert alert-danger">{props.error}</div>}
         </div>
 
     )
